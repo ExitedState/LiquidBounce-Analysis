@@ -118,14 +118,14 @@ public abstract class MixinMinecraft {
         }
     }
 
-    @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V", shift = At.Shift.AFTER))
-    private void afterMainScreen(CallbackInfo callbackInfo) {
-        if (LiquidBounce.fileManager.firstStart) {
-            displayGuiScreen(new GuiWelcome());
-        } else if (UpdateInfo.INSTANCE.hasUpdate()) {
-            displayGuiScreen(new GuiUpdate());
-        }
-    }
+//    @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V", shift = At.Shift.AFTER))
+//    private void afterMainScreen(CallbackInfo callbackInfo) {
+//        if (LiquidBounce.fileManager.firstStart) {
+//            displayGuiScreen(new GuiWelcome());
+//        } else if (UpdateInfo.INSTANCE.hasUpdate()) {
+//            displayGuiScreen(new GuiUpdate());
+//        }
+//    }
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {

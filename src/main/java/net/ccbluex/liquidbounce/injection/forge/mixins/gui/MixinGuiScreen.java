@@ -42,7 +42,7 @@ public abstract class MixinGuiScreen {
     public Minecraft mc;
 
     @Shadow
-    protected List<GuiButton> buttonList;
+    public List<GuiButton> buttonList;
 
     @Shadow
     public int width;
@@ -51,7 +51,7 @@ public abstract class MixinGuiScreen {
     public int height;
 
     @Shadow
-    protected FontRenderer fontRendererObj;
+    public FontRenderer fontRendererObj;
 
     @Shadow
     public void updateScreen() {
@@ -62,63 +62,63 @@ public abstract class MixinGuiScreen {
 
     @Shadow
     protected abstract void drawHoveringText(List<String> textLines, int x, int y);
-
-    @Inject(method = "drawWorldBackground", at = @At("HEAD"))
-    private void drawWorldBackground(final CallbackInfo callbackInfo) {
-        final HUD hud = (HUD) LiquidBounce.moduleManager.getModule(HUD.class);
-
-        if(hud.getInventoryParticle().get() && mc.thePlayer != null) {
-            final ScaledResolution scaledResolution = new ScaledResolution(mc);
-            final int width = scaledResolution.getScaledWidth();
-            final int height = scaledResolution.getScaledHeight();
-            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-        }
-    }
-
-    /**
-     * @author CCBlueX
-     */
-    @Inject(method = "drawBackground", at = @At("HEAD"), cancellable = true)
-    private void drawClientBackground(final CallbackInfo callbackInfo) {
-        GlStateManager.disableLighting();
-        GlStateManager.disableFog();
-
-        if(GuiBackground.Companion.getEnabled()) {
-            if (LiquidBounce.INSTANCE.getBackground() == null) {
-                BackgroundShader.BACKGROUND_SHADER.startShader();
-
-                final Tessellator instance = Tessellator.getInstance();
-                final WorldRenderer worldRenderer = instance.getWorldRenderer();
-                worldRenderer.begin(7, DefaultVertexFormats.POSITION);
-                worldRenderer.pos(0, height, 0.0D).endVertex();
-                worldRenderer.pos(width, height, 0.0D).endVertex();
-                worldRenderer.pos(width, 0, 0.0D).endVertex();
-                worldRenderer.pos(0, 0, 0.0D).endVertex();
-                instance.draw();
-
-                BackgroundShader.BACKGROUND_SHADER.stopShader();
-            }else{
-                final ScaledResolution scaledResolution = new ScaledResolution(mc);
-                final int width = scaledResolution.getScaledWidth();
-                final int height = scaledResolution.getScaledHeight();
-
-                mc.getTextureManager().bindTexture(LiquidBounce.INSTANCE.getBackground());
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
-            }
-
-            if (GuiBackground.Companion.getParticles())
-                ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-            callbackInfo.cancel();
-        }
-    }
-
-    @Inject(method = "drawBackground", at = @At("RETURN"))
-    private void drawParticles(final CallbackInfo callbackInfo) {
-        if(GuiBackground.Companion.getParticles())
-            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-    }
-
+//
+//    @Inject(method = "drawWorldBackground", at = @At("HEAD"))
+//    private void drawWorldBackground(final CallbackInfo callbackInfo) {
+//        final HUD hud = (HUD) LiquidBounce.moduleManager.getModule(HUD.class);
+//
+//        if(hud.getInventoryParticle().get() && mc.thePlayer != null) {
+//            final ScaledResolution scaledResolution = new ScaledResolution(mc);
+//            final int width = scaledResolution.getScaledWidth();
+//            final int height = scaledResolution.getScaledHeight();
+//            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
+//        }
+//    }
+//
+//    /**
+//     * @author CCBlueX
+//     */
+//    @Inject(method = "drawBackground", at = @At("HEAD"), cancellable = true)
+//    private void drawClientBackground(final CallbackInfo callbackInfo) {
+//        GlStateManager.disableLighting();
+//        GlStateManager.disableFog();
+//
+//        if(GuiBackground.Companion.getEnabled()) {
+//            if (LiquidBounce.INSTANCE.getBackground() == null) {
+//                BackgroundShader.BACKGROUND_SHADER.startShader();
+//
+//                final Tessellator instance = Tessellator.getInstance();
+//                final WorldRenderer worldRenderer = instance.getWorldRenderer();
+//                worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+//                worldRenderer.pos(0, height, 0.0D).endVertex();
+//                worldRenderer.pos(width, height, 0.0D).endVertex();
+//                worldRenderer.pos(width, 0, 0.0D).endVertex();
+//                worldRenderer.pos(0, 0, 0.0D).endVertex();
+//                instance.draw();
+//
+//                BackgroundShader.BACKGROUND_SHADER.stopShader();
+//            }else{
+//                final ScaledResolution scaledResolution = new ScaledResolution(mc);
+//                final int width = scaledResolution.getScaledWidth();
+//                final int height = scaledResolution.getScaledHeight();
+//
+//                mc.getTextureManager().bindTexture(LiquidBounce.INSTANCE.getBackground());
+//                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+//                Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
+//            }
+//
+//            if (GuiBackground.Companion.getParticles())
+//                ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
+//            callbackInfo.cancel();
+//        }
+//    }
+//
+//    @Inject(method = "drawBackground", at = @At("RETURN"))
+//    private void drawParticles(final CallbackInfo callbackInfo) {
+//        if(GuiBackground.Companion.getParticles())
+//            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
+//    }
+//
     @Inject(method = "sendChatMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
     private void messageSend(String msg, boolean addToChat, final CallbackInfo callbackInfo) {
         if (msg.startsWith(String.valueOf(LiquidBounce.commandManager.getPrefix())) && addToChat) {
