@@ -6,16 +6,15 @@
 package net.ccbluex.liquidbounce.injection.forge.mixins.client;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
-import net.ccbluex.liquidbounce.event.*;
+import net.ccbluex.liquidbounce.event.ClickBlockEvent;
+import net.ccbluex.liquidbounce.event.KeyEvent;
+import net.ccbluex.liquidbounce.event.TickEvent;
+import net.ccbluex.liquidbounce.event.WorldEvent;
 import net.ccbluex.liquidbounce.features.module.modules.combat.AutoClicker;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.AbortBreaking;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.MultiActions;
 import net.ccbluex.liquidbounce.features.module.modules.world.FastPlace;
 import net.ccbluex.liquidbounce.injection.forge.SplashProgressLock;
-import net.ccbluex.liquidbounce.ui.client.GuiMainMenu;
-import net.ccbluex.liquidbounce.ui.client.GuiUpdate;
-import net.ccbluex.liquidbounce.ui.client.GuiWelcome;
-import net.ccbluex.liquidbounce.update.UpdateInfo;
 import net.ccbluex.liquidbounce.utils.CPSCounter;
 import net.ccbluex.liquidbounce.utils.render.IconUtils;
 import net.ccbluex.liquidbounce.utils.render.MiniMapRegister;
@@ -24,7 +23,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.EffectRenderer;
@@ -55,8 +53,8 @@ public abstract class MixinMinecraft {
     @Shadow
     public GuiScreen currentScreen;
 
-    @Shadow
-    public boolean skipRenderWorld;
+//    @Shadow
+//    public boolean skipRenderWorld;
 
     @Shadow
     private int leftClickCounter;
@@ -133,18 +131,18 @@ public abstract class MixinMinecraft {
 //        Display.setTitle(LiquidBounce.CLIENT_NAME + " " + LiquidBounce.CLIENT_VERSION + " " +  LiquidBounce.CLIENT_COMMIT + "  | " + LiquidBounce.MINECRAFT_VERSION + (LiquidBounce.IN_DEV ? " | DEVELOPMENT BUILD" : ""));
     }
 
-    @Inject(method = "displayGuiScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", shift = At.Shift.AFTER))
-    private void handleDisplayGuiScreen(CallbackInfo callbackInfo) {
-        if (currentScreen instanceof net.minecraft.client.gui.GuiMainMenu || (currentScreen != null && currentScreen.getClass().getName().startsWith("net.labymod") && currentScreen.getClass().getSimpleName().equals("ModGuiMainMenu"))) {
-            currentScreen = new GuiMainMenu();
-
-            ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-            currentScreen.setWorldAndResolution(Minecraft.getMinecraft(), scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-            skipRenderWorld = false;
-        }
-
-        LiquidBounce.eventManager.callEvent(new ScreenEvent(currentScreen));
-    }
+//    @Inject(method = "displayGuiScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", shift = At.Shift.AFTER))
+//    private void handleDisplayGuiScreen(CallbackInfo callbackInfo) {
+//        if (currentScreen instanceof net.minecraft.client.gui.GuiMainMenu || (currentScreen != null && currentScreen.getClass().getName().startsWith("net.labymod") && currentScreen.getClass().getSimpleName().equals("ModGuiMainMenu"))) {
+//            currentScreen = new GuiMainMenu();
+//
+//            ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+//            currentScreen.setWorldAndResolution(Minecraft.getMinecraft(), scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+//            skipRenderWorld = false;
+//        }
+//
+//        LiquidBounce.eventManager.callEvent(new ScreenEvent(currentScreen));
+//    }
 
     private long lastFrame = getTime();
 
