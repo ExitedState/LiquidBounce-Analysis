@@ -15,6 +15,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
+import java.util.*
 
 @ModuleInfo(name = "Fullbright", description = "Brightens up the world around you.", category = ModuleCategory.RENDER)
 class Fullbright : Module() {
@@ -38,7 +39,7 @@ class Fullbright : Module() {
     @EventTarget(ignoreCondition = true)
     fun onUpdate(event: UpdateEvent?) {
         if (state || LiquidBounce.moduleManager.getModule(XRay::class.java).state) {
-            when (modeValue.get().toLowerCase()) {
+            when (modeValue.get().lowercase(Locale.getDefault())) {
                 "gamma" -> when {
                     mc.gameSettings.gammaSetting <= 100f -> mc.gameSettings.gammaSetting++
                 }

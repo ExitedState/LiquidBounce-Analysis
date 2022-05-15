@@ -15,6 +15,7 @@ import net.ccbluex.liquidbounce.utils.misc.StringUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils.translateAlternateColorCodes
 import net.ccbluex.liquidbounce.value.*
 import org.lwjgl.input.Keyboard
+import java.util.*
 
 /*
  * LiquidBounce Hacked Client
@@ -44,7 +45,7 @@ object SettingsUtils {
                     val url = if (urlRaw.startsWith("http"))
                         urlRaw
                     else
-                        "${LiquidBounce.CLIENT_CLOUD}/settings/${urlRaw.toLowerCase()}"
+                        "${LiquidBounce.CLIENT_CLOUD}/settings/${urlRaw.lowercase(Locale.getDefault())}"
 
                     try {
                         ClientUtils.displayChatMessage("§7[§3§lAutoSettings§7] §7Loading settings from §a§l$url§7...")

@@ -21,6 +21,7 @@ import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.network.play.server.S27PacketExplosion
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -72,7 +73,7 @@ class Velocity : Module() {
         if (thePlayer.isInWater || thePlayer.isInLava || thePlayer.isInWeb)
             return
 
-        when (modeValue.get().toLowerCase()) {
+        when (modeValue.get().lowercase(Locale.getDefault())) {
             "jump" -> if (thePlayer.hurtTime > 0 && thePlayer.onGround) {
                 thePlayer.motionY = 0.42
 
@@ -127,8 +128,8 @@ class Velocity : Module() {
             }
 
             "aacv4" -> {
-                if (thePlayer.hurtTime>0 && !thePlayer.onGround){
-                    val reduce=aacv4MotionReducerValue.get();
+                if (thePlayer.hurtTime > 0 && !thePlayer.onGround) {
+                    val reduce = aacv4MotionReducerValue.get();
                     thePlayer.motionX *= reduce
                     thePlayer.motionZ *= reduce
                 }
@@ -145,7 +146,8 @@ class Velocity : Module() {
 
                     // Reduce Y
                     if (thePlayer.hurtResistantTime > 0 && aacPushYReducerValue.get()
-                            && !LiquidBounce.moduleManager[Speed::class.java]!!.state)
+                        && !LiquidBounce.moduleManager[Speed::class.java]!!.state
+                    )
                         thePlayer.motionY -= 0.014999993
                 }
 

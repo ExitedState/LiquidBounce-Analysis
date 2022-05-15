@@ -31,6 +31,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.util.EnumFacing
 import java.awt.Color
+import java.util.*
 
 @ModuleInfo(name = "Fucker", description = "Destroys selected blocks around you. (aka.  IDNuker)", category = ModuleCategory.WORLD)
 object Fucker : Module() {
@@ -254,12 +255,16 @@ object Fucker : Module() {
     private fun isHitable(blockPos: BlockPos): Boolean {
         val thePlayer = mc.thePlayer ?: return false
 
-        return when (throughWallsValue.get().toLowerCase()) {
+        return when (throughWallsValue.get().lowercase(Locale.getDefault())) {
             "raycast" -> {
-                val eyesPos = Vec3(thePlayer.posX, thePlayer.entityBoundingBox.minY +
-                        thePlayer.eyeHeight, thePlayer.posZ)
-                val movingObjectPosition = mc.theWorld!!.rayTraceBlocks(eyesPos,
-                        Vec3(blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5), false, true, false)
+                val eyesPos = Vec3(
+                    thePlayer.posX, thePlayer.entityBoundingBox.minY +
+                            thePlayer.eyeHeight, thePlayer.posZ
+                )
+                val movingObjectPosition = mc.theWorld!!.rayTraceBlocks(
+                    eyesPos,
+                    Vec3(blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5), false, true, false
+                )
 
                 movingObjectPosition != null && movingObjectPosition.blockPos == blockPos
             }

@@ -24,6 +24,9 @@ import net.minecraft.entity.item.EntityMinecartChest
 import net.minecraft.tileentity.*
 import org.lwjgl.opengl.GL11
 import java.awt.Color
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @ModuleInfo(name = "StorageESP", description = "Allows you to see chests, dispensers, etc. through walls.", category = ModuleCategory.RENDER)
 class StorageESP : Module() {
@@ -60,14 +63,18 @@ class StorageESP : Module() {
             mc.gameSettings.gammaSetting = 100000.0f
 
             for (tileEntity in mc.theWorld!!.loadedTileEntityList) {
-                val color: Color = getColor(tileEntity)?: continue
+                val color: Color = getColor(tileEntity) ?: continue
 
                 if (!(tileEntity is TileEntityChest || tileEntity is TileEntityEnderChest)) {
                     RenderUtils.drawBlockBox(tileEntity.pos, color, !mode.equals("otherbox", ignoreCase = true))
                     continue
                 }
-                when (mode.toLowerCase()) {
-                    "otherbox", "box" -> RenderUtils.drawBlockBox(tileEntity.pos, color, !mode.equals("otherbox", ignoreCase = true))
+                when (mode.lowercase(Locale.getDefault())) {
+                    "otherbox", "box" -> RenderUtils.drawBlockBox(
+                        tileEntity.pos,
+                        color,
+                        !mode.equals("otherbox", ignoreCase = true)
+                    )
                     "2d" -> RenderUtils.draw2D(tileEntity.pos, color.rgb, Color.BLACK.rgb)
                     "outline" -> {
                         RenderUtils.glColor(color);
@@ -95,7 +102,11 @@ class StorageESP : Module() {
                         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
                         RenderUtils.glColor(color)
                         GL11.glLineWidth(1.5f)
-                        TileEntityRendererDispatcher.instance.renderTileEntity(tileEntity, event.partialTicks, -1) //TODO: render twice?
+                        TileEntityRendererDispatcher.instance.renderTileEntity(
+                            tileEntity,
+                            event.partialTicks,
+                            -1
+                        ) //TODO: render twice?
                         GL11.glPopAttrib()
                         GL11.glPopMatrix()
                     }
@@ -103,8 +114,12 @@ class StorageESP : Module() {
             }
             for (entity in mc.theWorld!!.loadedEntityList) {
                 if (entity is EntityMinecartChest) {
-                    when (mode.toLowerCase()) {
-                        "otherbox", "box" -> RenderUtils.drawEntityBox(entity, Color(0, 66, 255), !mode.equals("otherbox", ignoreCase = true))
+                    when (mode.lowercase(Locale.getDefault())) {
+                        "otherbox", "box" -> RenderUtils.drawEntityBox(
+                            entity,
+                            Color(0, 66, 255),
+                            !mode.equals("otherbox", ignoreCase = true)
+                        )
                         "2d" -> RenderUtils.draw2D(entity.position, Color(0, 66, 255).rgb, Color.BLACK.rgb)
                         "outline" -> {
                             val entityShadow: Boolean = mc.gameSettings.entityShadows

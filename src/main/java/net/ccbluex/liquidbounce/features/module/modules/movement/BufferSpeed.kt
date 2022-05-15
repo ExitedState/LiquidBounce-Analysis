@@ -23,6 +23,8 @@ import net.minecraft.block.BlockStairs
 import net.minecraft.init.Blocks
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
+import java.util.*
+import kotlin.collections.ArrayList
 
 @ModuleInfo(name = "BufferSpeed", description = "Allows you to walk faster on slabs and stairs.", category = ModuleCategory.MOVEMENT)
 class BufferSpeed : Module() {
@@ -101,7 +103,7 @@ class BufferSpeed : Module() {
                 return
             }
             if (slabsValue.get() && getBlock(blockPos) is BlockSlab) {
-                when (slabsModeValue.get().toLowerCase()) {
+                when (slabsModeValue.get().lowercase(Locale.getDefault())) {
                     "old" -> {
                         boost(slabsBoostValue.get())
                         return
@@ -125,7 +127,7 @@ class BufferSpeed : Module() {
                 }
             }
             if (stairsValue.get() && (getBlock(blockPos.down()) is BlockStairs || getBlock(blockPos) is BlockStairs)) {
-                when (stairsModeValue.get().toLowerCase()) {
+                when (stairsModeValue.get().lowercase(Locale.getDefault())) {
                     "old" -> {
                         boost(stairsBoostValue.get())
                         return
@@ -171,8 +173,15 @@ class BufferSpeed : Module() {
             }
 
             if (wallValue.get()) {
-                when (wallModeValue.get().toLowerCase()) {
-                    "old" -> if (thePlayer.isCollidedVertically && isNearBlock || getBlock(BlockPos(thePlayer.posX, thePlayer.posY + 2.0, thePlayer.posZ)) != Blocks.air) {
+                when (wallModeValue.get().lowercase(Locale.getDefault())) {
+                    "old" -> if (thePlayer.isCollidedVertically && isNearBlock || getBlock(
+                            BlockPos(
+                                thePlayer.posX,
+                                thePlayer.posY + 2.0,
+                                thePlayer.posZ
+                            )
+                        ) != Blocks.air
+                    ) {
                         boost(wallBoostValue.get())
                         return
                     }

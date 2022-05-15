@@ -41,6 +41,7 @@ import net.minecraft.util.Vec3
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import java.awt.Color
+import java.util.*
 import kotlin.math.*
 
 @ModuleInfo(
@@ -264,13 +265,13 @@ class Scaffold : Module() {
             }
         }
         if (player.onGround) {
-            when (modeValue.get().toLowerCase()) {
+            when (modeValue.get().lowercase(Locale.getDefault())) {
                 "rewinside" -> {
                     MovementUtils.strafe(0.2F)
                     player.motionY = 0.0
                 }
             }
-            when (zitterMode.get().toLowerCase()) {
+            when (zitterMode.get().lowercase(Locale.getDefault())) {
                 "off" -> {
                     return
                 }
@@ -461,7 +462,7 @@ class Scaffold : Module() {
                 return
             }
 
-            when (autoBlockValue.get().toLowerCase()) {
+            when (autoBlockValue.get().lowercase(Locale.getDefault())) {
                 "off" -> {
                     return
                 }

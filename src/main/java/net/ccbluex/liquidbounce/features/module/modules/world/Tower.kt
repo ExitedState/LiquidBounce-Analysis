@@ -43,6 +43,7 @@ import net.minecraft.util.Vec3
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import java.awt.Color
+import java.util.*
 import kotlin.math.truncate
 
 @ModuleInfo(
@@ -183,7 +184,7 @@ class Tower : Module() {
     private fun move() {
         val thePlayer = mc.thePlayer ?: return
 
-        when (modeValue.get().toLowerCase()) {
+        when (modeValue.get().lowercase(Locale.getDefault())) {
             "jump" -> if (thePlayer.onGround && timer.hasTimePassed(jumpDelayValue.get())) {
                 fakeJump()
                 thePlayer.motionY = jumpMotionValue.get().toDouble()

@@ -17,6 +17,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.util.EnumFacing
+import java.util.*
 
 @ModuleInfo(name = "LongJump", description = "Allows you to jump further.", category = ModuleCategory.MOVEMENT)
 class LongJump : Module() {
@@ -49,7 +50,7 @@ class LongJump : Module() {
                 return
             }
             run {
-                when (mode.toLowerCase()) {
+                when (mode.lowercase(Locale.getDefault())) {
                     "ncp" -> {
                         MovementUtils.strafe(MovementUtils.speed * if (canBoost) ncpBoostValue.get() else 1f)
                         canBoost = false
@@ -71,7 +72,7 @@ class LongJump : Module() {
                             var x = 0.0
                             var z = 0.0
 
-                            when(horizontalFacing) {
+                            when (horizontalFacing) {
                                 EnumFacing.NORTH -> z = -value
                                 EnumFacing.EAST -> x = +value
                                 EnumFacing.SOUTH -> z = +value
@@ -136,7 +137,7 @@ class LongJump : Module() {
         teleported = false
 
         if (state) {
-            when (modeValue.get().toLowerCase()) {
+            when (modeValue.get().lowercase(Locale.getDefault())) {
                 "mineplex" -> event.motion = event.motion * 4.08f
                 "mineplex2" -> {
                     if (mc.thePlayer!!.isCollidedHorizontally) {

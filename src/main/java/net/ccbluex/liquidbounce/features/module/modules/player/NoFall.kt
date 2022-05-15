@@ -28,6 +28,7 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import net.minecraft.util.Vec3
+import java.util.*
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
@@ -78,7 +79,7 @@ class NoFall : Module() {
             ) { it is BlockLiquid }
         ) return
 
-        when (modeValue.get().toLowerCase()) {
+        when (modeValue.get().lowercase(Locale.getDefault())) {
             "packet" -> {
                 if (mc.thePlayer!!.fallDistance > 2f) {
                     mc.netHandler.addToSendQueue(C03PacketPlayer(true))

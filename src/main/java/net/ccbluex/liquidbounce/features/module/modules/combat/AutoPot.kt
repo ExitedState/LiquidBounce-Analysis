@@ -29,6 +29,7 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.client.C0DPacketCloseWindow
 import net.minecraft.network.play.client.C16PacketClientStatus
 import net.minecraft.potion.Potion
+import java.util.*
 
 @ModuleInfo(name = "AutoPot", description = "Automatically throws healing potions.", category = ModuleCategory.COMBAT)
 class AutoPot : Module() {
@@ -59,7 +60,7 @@ class AutoPot : Module() {
 
                 if (thePlayer.health <= healthValue.get() && potionInHotbar != -1) {
                     if (thePlayer.onGround) {
-                        when (modeValue.get().toLowerCase()) {
+                        when (modeValue.get().lowercase(Locale.getDefault())) {
                             "jump" -> thePlayer.jump()
                             "port" -> thePlayer.moveEntity(0.0, 0.42, 0.0)
                         }

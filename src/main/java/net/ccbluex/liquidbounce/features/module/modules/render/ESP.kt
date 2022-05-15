@@ -33,6 +33,9 @@ import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector3f
 import java.awt.Color
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.max
 import kotlin.math.min
 
@@ -90,7 +93,7 @@ class ESP : Module() {
             if (entity != mc.thePlayer && EntityUtils.isSelected(entity, false)) {
                 val color = getColor(entity)
 
-                when (mode.toLowerCase()) {
+                when (mode.lowercase(Locale.getDefault())) {
                     "box", "otherbox" -> RenderUtils.drawEntityBox(
                         entity,
                         color,
@@ -172,7 +175,7 @@ class ESP : Module() {
 
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
-        val mode = modeValue.get().toLowerCase()
+        val mode = modeValue.get().lowercase(Locale.getDefault())
         val partialTicks = event.partialTicks
         val shader = (if (mode.equals(
                 "shaderoutline",

@@ -20,6 +20,7 @@ import net.minecraft.item.ItemBucketMilk
 import net.minecraft.item.ItemFood
 import net.minecraft.item.ItemPotion
 import net.minecraft.network.play.client.C03PacketPlayer
+import java.util.*
 
 @ModuleInfo(name = "FastUse", description = "Allows you to use items faster.", category = ModuleCategory.PLAYER)
 class FastUse : Module() {
@@ -52,7 +53,7 @@ class FastUse : Module() {
         val usingItem = thePlayer.itemInUse!!.item
 
         if (usingItem is ItemFood || usingItem is ItemBucketMilk || usingItem is ItemPotion) {
-            when (modeValue.get().toLowerCase()) {
+            when (modeValue.get().lowercase(Locale.getDefault())) {
                 "instant" -> {
                     repeat(35) {
                         mc.netHandler.addToSendQueue(C03PacketPlayer(thePlayer.onGround))
@@ -73,7 +74,7 @@ class FastUse : Module() {
                     mc.timer.timerSpeed = 1.22F
                     usedTimer = true
                 }
-                
+
                 "custom" -> {
                     mc.timer.timerSpeed = customTimer.get()
                     usedTimer = true
