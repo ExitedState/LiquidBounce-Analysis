@@ -18,8 +18,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,9 +151,9 @@ public class GuiPortScanner extends GuiScreen {
                                     final int port = currentPort;
 
                                     try {
-                                        final Socket socket = new Socket();
-                                        socket.connect(new InetSocketAddress(host, port), 500);
-                                        socket.close();
+//                                        final Socket socket = new Socket();
+//                                        socket.connect(new InetSocketAddress(host, port), 500);
+//                                        socket.close();
 
                                         synchronized (ports) {
                                             if (!ports.contains(port))

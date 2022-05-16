@@ -122,7 +122,7 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
         GL11.glBegin(GL11.GL_QUADS)
 
         for (char in text.toCharArray()) {
-            if (char.toInt() >= charLocations.size) {
+            if (char.code >= charLocations.size) {
                 GL11.glEnd()
 
                 // Ugly solution, because floating point numbers, but I think that shouldn't be that much of a problem
@@ -141,7 +141,7 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
 
                 GL11.glBegin(GL11.GL_QUADS)
             } else {
-                val fontChar = charLocations[char.toInt()] ?: continue
+                val fontChar = charLocations[char.code] ?: continue
 
                 drawChar(fontChar, currX.toFloat(), 0f)
                 currX += fontChar.width - 8.0
@@ -278,10 +278,10 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
 
         for (c in text.toCharArray()) {
             val fontChar = charLocations[
-                    if (c.toInt() < charLocations.size)
-                        c.toInt()
+                    if (c.code < charLocations.size)
+                        c.code
                     else
-                        '\u0003'.toInt()
+                        '\u0003'.code
             ] ?: continue
 
             width += fontChar.width - 8
