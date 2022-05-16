@@ -22,7 +22,7 @@ import kotlin.concurrent.thread
 
 class ClientRichPresence : MinecraftInstance() {
 
-    var showRichPresenceValue = true
+    var showRichPresenceValue = false
 
     // IPC Client
     private var ipcClient: IPCClient? = null
