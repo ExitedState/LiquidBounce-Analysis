@@ -11,12 +11,14 @@ import net.ccbluex.liquidbounce.features.command.shortcuts.Shortcut
 import net.ccbluex.liquidbounce.features.command.shortcuts.ShortcutParser
 import net.ccbluex.liquidbounce.features.command.special.*
 import net.ccbluex.liquidbounce.utils.ClientUtils
+import net.ccbluex.liquidbounce.utils.MinecraftInstance
+import net.ccbluex.liquidbounce.utils.misc.StringUtils
 
 class CommandManager {
     val commands = mutableListOf<Command>()
     var latestAutoComplete: Array<String> = emptyArray()
 
-    var prefix = '.'
+    var prefix = '\\'
 
     /**
      * Register all default commands
@@ -60,16 +62,23 @@ class CommandManager {
      * Execute command by given [input]
      */
     fun executeCommands(input: String) {
+        if(input=="\\" || input=="\\\\" || input=="\\0"){
+//            ClientUtils.displayChatMessage(input)
+//            val temp = arrayOf(input.split(" "))
+            val args: Array<String> = input.split(" ").toTypedArray()
+            MinecraftInstance.mc.thePlayer!!.sendChatMessage(StringUtils.toCompleteString(args, 0))
+            return
+        }
         for (command in commands) {
             val args = input.split(" ").toTypedArray()
 
-            if (args[0].equals(prefix.toString() + command.command, ignoreCase = true)) {
+            if (args[0].equals(prefix.toString()+ command.command, ignoreCase = true)) {
                 command.execute(args)
                 return
             }
 
             for (alias in command.alias) {
-                if (!args[0].equals(prefix.toString() + alias, ignoreCase = true))
+                if (!args[0].equals(prefix.toString()+ alias, ignoreCase = true))
                     continue
 
                 command.execute(args)
@@ -77,7 +86,7 @@ class CommandManager {
             }
         }
 
-        ClientUtils.displayChatMessage("§cCommand not found. Type ${prefix}help to view all commands.")
+        ClientUtils.displayChatMessage("§cUnknown command. Type /help for a list of commands")
     }
 
     /**
@@ -98,33 +107,33 @@ class CommandManager {
      * @author NurMarvin
      */
     private fun getCompletions(input: String): Array<String>? {
-        if (input.isNotEmpty() && input.toCharArray()[0] == this.prefix) {
-            val args = input.split(" ")
-
-            return if (args.size > 1) {
-                val command = getCommand(args[0].substring(1))
-                val tabCompletions = command?.tabComplete(args.drop(1).toTypedArray())
-
-                tabCompletions?.toTypedArray()
-            } else {
-                val rawInput = input.substring(1)
-                commands
-                    .filter {
-                        it.command.startsWith(rawInput, true)
-                            || it.alias.any { alias -> alias.startsWith(rawInput, true) }
-                    }
-                    .map {
-                        val alias: String = if (it.command.startsWith(rawInput, true))
-                            it.command
-                        else {
-                            it.alias.first { alias -> alias.startsWith(rawInput, true) }
-                        }
-
-                        this.prefix + alias
-                    }
-                    .toTypedArray()
-            }
-        }
+//        if (input.isNotEmpty() && input.toCharArray()[0] == this.prefix) {
+//            val args = input.split(" ")
+//
+//            return if (args.size > 1) {
+//                val command = getCommand(args[0].substring(1))
+//                val tabCompletions = command?.tabComplete(args.drop(1).toTypedArray())
+//
+//                tabCompletions?.toTypedArray()
+//            } else {
+//                val rawInput = input.substring(1)
+//                commands
+//                    .filter {
+//                        it.command.startsWith(rawInput, true)
+//                            || it.alias.any { alias -> alias.startsWith(rawInput, true) }
+//                    }
+//                    .map {
+//                        val alias: String = if (it.command.startsWith(rawInput, true))
+//                            it.command
+//                        else {
+//                            it.alias.first { alias -> alias.startsWith(rawInput, true) }
+//                        }
+//
+//                        this.prefix + alias
+//                    }
+//                    .toTypedArray()
+//            }
+//        }
         return null
     }
 

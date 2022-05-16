@@ -7,21 +7,16 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
 
@@ -109,27 +104,27 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     private void onAutocompleteResponse(String[] autoCompleteResponse, CallbackInfo callbackInfo) {
         if (LiquidBounce.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
     }
-
-    /**
-     * @author CCBlueX
-     */
-    @Overwrite
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        Gui.drawRect(2, this.height - (int) fade, this.width - 2, this.height, Integer.MIN_VALUE);
-        this.inputField.drawTextBox();
-
-        if (LiquidBounce.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(LiquidBounce.commandManager.getPrefix()))) {
-            String[] latestAutoComplete = LiquidBounce.commandManager.getLatestAutoComplete();
-            String[] textArray = inputField.getText().split(" ");
-            String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
-
-            mc.fontRendererObj.drawStringWithShadow(trimmedString, inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition, new Color(165, 165, 165).getRGB());
-        }
-
-        IChatComponent ichatcomponent =
-                this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
-
-        if (ichatcomponent != null)
-            this.handleComponentHover(ichatcomponent, mouseX, mouseY);
-    }
+//
+//    /**
+//     * @author CCBlueX
+//     */
+//    @Overwrite
+//    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+//        Gui.drawRect(2, this.height - (int) fade, this.width - 2, this.height, Integer.MIN_VALUE);
+//        this.inputField.drawTextBox();
+//
+//        if (LiquidBounce.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(LiquidBounce.commandManager.getPrefix()))) {
+//            String[] latestAutoComplete = LiquidBounce.commandManager.getLatestAutoComplete();
+//            String[] textArray = inputField.getText().split(" ");
+//            String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
+//
+//            mc.fontRendererObj.drawStringWithShadow(trimmedString, inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition, new Color(165, 165, 165).getRGB());
+//        }
+//
+//        IChatComponent ichatcomponent =
+//                this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+//
+//        if (ichatcomponent != null)
+//            this.handleComponentHover(ichatcomponent, mouseX, mouseY);
+//    }
 }
