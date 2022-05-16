@@ -1,8 +1,8 @@
 [
   {
-    "modid": "liquidbounce",
-    "name": "LiquidBounce",
-    "description": "Edited By LuckyShotA",
+    "modid": "luck",
+    "name": "luck",
+    "description": "Edited By Lucky (Change mod name for own used only)",
     "version": "${version}",
     "mcversion": "1.8.9",
     "url": "https://liquidbounce.net",

@@ -1,6 +1,6 @@
 package net.ccbluex.liquidinstruction
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.luck.LiquidBounce
 import java.awt.BorderLayout
 import javax.swing.JFrame
 import javax.swing.JLabel
@@ -8,7 +8,7 @@ import javax.swing.WindowConstants
 
 fun main() {
     // Setup instruction frame
-    val frame = JFrame("LiquidBounce | Installation")
+    val frame = JFrame("luck | Installation")
     frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
     frame.layout = BorderLayout()
     frame.isResizable = false
