@@ -5,8 +5,6 @@
  */
 package net.ccbluex.liquidbounce.features.module.modules.movement
 
-import net.minecraft.util.BlockPos
-import net.minecraft.util.Vec3
 import net.ccbluex.liquidbounce.event.*
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
@@ -27,7 +25,9 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.potion.Potion
 import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.Vec3
 import org.lwjgl.input.Keyboard
 import java.awt.Color
 import java.math.BigDecimal
@@ -42,7 +42,7 @@ import kotlin.math.sqrt
     name = "Fly",
     description = "Allows you to fly in survival mode.",
     category = ModuleCategory.MOVEMENT,
-    keyBind = Keyboard.KEY_F
+    keyBind = Keyboard.KEY_NONE
 )
 class Fly : Module() {
     val modeValue = ListValue(
