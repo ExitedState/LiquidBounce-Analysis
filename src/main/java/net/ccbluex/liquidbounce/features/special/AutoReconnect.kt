@@ -10,9 +10,9 @@ object AutoReconnect {
     const val MAX = 60000
     const val MIN = 1000
 
-    var isEnabled = true
+    var isEnabled = false
         private set
-    var delay = 5000
+    var delay = MAX
         set(value) {
             isEnabled = value < MAX
 
