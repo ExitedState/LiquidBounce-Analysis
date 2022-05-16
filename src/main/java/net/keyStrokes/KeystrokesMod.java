@@ -8,7 +8,6 @@ import net.keyStrokes.overlay.RenderedCPSKey;
 import net.keyStrokes.overlay.RenderedKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -36,7 +35,7 @@ public class KeystrokesMod {
     private static long currentTick;
 
     private File configFile;
-    private boolean firstRun;
+//    private boolean firstRun;
 
     private boolean showGui;
 
@@ -53,7 +52,7 @@ public class KeystrokesMod {
 
         try {
             if (!configFile.exists()) {
-                firstRun = true;
+//                firstRun = false;
                 saveConfig();
             } else {
                 loadConfig();
@@ -72,22 +71,22 @@ public class KeystrokesMod {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (firstRun) {
+//        if (firstRun) {
 //            firstRun = false;
-
-            new Thread(() -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ignored) {
-                }
-
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    String color = (char) 167 + "b";
-//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(color + "Looks like this is your first time running Keystrokes Mod."));
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(color + "Type /kgui to open the configuration GUI."));
-                });
-            }).start();
-        }
+//
+//            new Thread(() -> {
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException ignored) {
+//                }
+//
+//                Minecraft.getMinecraft().addScheduledTask(() -> {
+//                    String color = (char) 167 + "b";
+////                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(color + "Looks like this is your first time running Keystrokes Mod."));
+//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(color + "Type /kgui to open the configuration GUI."));
+//                });
+//            }).start();
+//        }
 
         if (showGui) {
             Minecraft.getMinecraft().displayGuiScreen(new KeystrokesModGUI());
@@ -152,104 +151,140 @@ public class KeystrokesMod {
         keys.clear();
 
         GameSettings gameSettings = Minecraft.getMinecraft().gameSettings;
-
-        // Forward
-        {
-            KeyConfiguration configuration = new KeyConfiguration();
-            configuration.style = RenderStyle.ELLIPSE;
-            configuration.centerX = 42;
-            configuration.centerY = 20;
-
-            RenderedKey key = new RenderedKey(gameSettings.keyBindForward, configuration);
-            MinecraftForge.EVENT_BUS.register(key);
-            keys.add(key);
-        }
-        //
-
-        // Left
-        {
-            KeyConfiguration configuration = new KeyConfiguration();
-            configuration.style = RenderStyle.ELLIPSE;
-            configuration.centerX = 20;
-            configuration.centerY = 42;
-
-            RenderedKey key = new RenderedKey(gameSettings.keyBindLeft, configuration);
-            MinecraftForge.EVENT_BUS.register(key);
-            keys.add(key);
-        }
-        //
-
-        // Back
-        {
-            KeyConfiguration configuration = new KeyConfiguration();
-            configuration.style = RenderStyle.ELLIPSE;
-            configuration.centerX = 42;
-            configuration.centerY = 42;
-
-            RenderedKey key = new RenderedKey(gameSettings.keyBindBack, configuration);
-            MinecraftForge.EVENT_BUS.register(key);
-            keys.add(key);
-        }
-        //
-
-        // Right
-        {
-            KeyConfiguration configuration = new KeyConfiguration();
-            configuration.style = RenderStyle.ELLIPSE;
-            configuration.centerX = 64;
-            configuration.centerY = 42;
-
-            RenderedKey key = new RenderedKey(gameSettings.keyBindRight, configuration);
-            MinecraftForge.EVENT_BUS.register(key);
-            keys.add(key);
-        }
-        //
-
-        // Attack
-        {
-            KeyConfiguration configuration = new KeyConfiguration();
-            configuration.width = 30;
-            configuration.centerX = 25;
-            configuration.centerY = 64;
-            configuration.countCPS = true;
-            configuration.textScale = 0.75;
-
-            RenderedKey key = new RenderedCPSKey(gameSettings.keyBindAttack, configuration);
-            MinecraftForge.EVENT_BUS.register(key);
-            keys.add(key);
-        }
-        //
-
-        // Use item
-        {
-            KeyConfiguration configuration = new KeyConfiguration();
-            configuration.width = 30;
-            configuration.centerX = 59;
-            configuration.centerY = 64;
-            configuration.countCPS = true;
-            configuration.textScale = 0.75;
-
-            RenderedKey key = new RenderedCPSKey(gameSettings.keyBindUseItem, configuration);
-            MinecraftForge.EVENT_BUS.register(key);
-            keys.add(key);
-        }
-        //
-
         // Jump
         {
             KeyConfiguration configuration = new KeyConfiguration();
-            configuration.style = RenderStyle.HEXAGON;
-            configuration.width = 64;
-            configuration.height = 10;
-            configuration.centerX = 42;
-            configuration.centerY = 81;
-            configuration.bounce = true;
-            configuration.textScale = 0.75;
+            configuration.style = RenderStyle.RECTANGLE;
+            configuration.width = 70;
+            configuration.height = 16;
+            configuration.centerX = 475;
+            configuration.centerY = 218;
+            configuration.bounce = false;
+            configuration.textScale = 1.0;
+            configuration.fades = false;
+            configuration.particles = false;
+            configuration.particleColor = -1;
+            configuration.rainbowParticles = false;
+            configuration.baseColorsInactive = 3674937296571858944L;
+            configuration.baseColorsActive = -9151314444947554305L;
+            configuration.textColorInactive = -1;
+            configuration.textColorActive = -16777216;
+
 
             RenderedKey key = new RenderedKey(gameSettings.keyBindJump, configuration);
             MinecraftForge.EVENT_BUS.register(key);
             keys.add(key);
         }
+//
+//        // Forward
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.style = RenderStyle.RECTANGLE;
+//            configuration.centerX = 475;
+//            configuration.centerY = 160;
+//
+//            RenderedKey key = new RenderedKey(gameSettings.keyBindForward, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+//        //
+//
+//        // Left
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.style = RenderStyle.RECTANGLE;
+//            configuration.centerX = 454;
+//            configuration.centerY = 181;
+//
+//            RenderedKey key = new RenderedKey(gameSettings.keyBindLeft, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+//        //
+//
+//        // Back
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.style = RenderStyle.RECTANGLE;
+//            configuration.centerX = 475;
+//            configuration.centerY = 181;
+//
+//            RenderedKey key = new RenderedKey(gameSettings.keyBindBack, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+//        //
+//
+//        // Right
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.style = RenderStyle.RECTANGLE;
+//            configuration.centerX = 496;
+//            configuration.centerY = 181;
+//
+//            RenderedKey key = new RenderedKey(gameSettings.keyBindRight, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+//        // Sprint
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.style = RenderStyle.RECTANGLE;
+//            configuration.width = 40;
+//            configuration.height = 20;
+//            configuration.centerX = 464;
+//            configuration.centerY = 201;
+//
+//            RenderedKey key = new RenderedKey(gameSettings.keyBindSprint, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+//        // Sneak
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.style = RenderStyle.RECTANGLE;
+//            configuration.width = 40;
+//            configuration.height = 20;
+//            configuration.centerX = 486;
+//            configuration.centerY = 201;
+//
+//            RenderedKey key = new RenderedKey(gameSettings.keyBindSneak, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+        //
+//
+//        // Attack
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.width = 30;
+//            configuration.centerX = 25;
+//            configuration.centerY = 64;
+//            configuration.countCPS = true;
+//            configuration.textScale = 0.75;
+//
+//            RenderedKey key = new RenderedCPSKey(gameSettings.keyBindAttack, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+//        //
+//
+//        // Use item
+//        {
+//            KeyConfiguration configuration = new KeyConfiguration();
+//            configuration.width = 30;
+//            configuration.centerX = 59;
+//            configuration.centerY = 64;
+//            configuration.countCPS = true;
+//            configuration.textScale = 0.75;
+//
+//            RenderedKey key = new RenderedCPSKey(gameSettings.keyBindUseItem, configuration);
+//            MinecraftForge.EVENT_BUS.register(key);
+//            keys.add(key);
+//        }
+        //
+
+
         //
     }
 
