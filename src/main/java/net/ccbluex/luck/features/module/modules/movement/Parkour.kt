@@ -12,7 +12,11 @@ import net.ccbluex.luck.features.module.ModuleCategory
 import net.ccbluex.luck.features.module.ModuleInfo
 import net.ccbluex.luck.utils.MovementUtils
 
-@ModuleInfo(name = "Parkour", description = "Automatically jumps when reaching the edge of a block.", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(
+    name = "Parkour",
+    description = "Automatically jumps when reaching the edge of a block.",
+    category = ModuleCategory.MOVEMENT
+)
 class Parkour : Module() {
 
     @EventTarget
@@ -20,8 +24,12 @@ class Parkour : Module() {
         val thePlayer = mc.thePlayer ?: return
 
         if (MovementUtils.isMoving && thePlayer.onGround && !thePlayer.isSneaking && !mc.gameSettings.keyBindSneak.isKeyDown && !mc.gameSettings.keyBindJump.isKeyDown &&
-                mc.theWorld!!.getCollidingBoundingBoxes(thePlayer, thePlayer.entityBoundingBox
-                        .offset(0.0, -0.5, 0.0).expand(-0.001, 0.0, -0.001)).isEmpty())
+            mc.theWorld!!.getCollidingBoundingBoxes(
+                thePlayer, thePlayer.entityBoundingBox
+                    .offset(0.0, -0.5, 0.0).expand(-0.001, 0.0, -0.001)
+            ).isEmpty()
+        ) {
             thePlayer.jump()
+        }
     }
 }
