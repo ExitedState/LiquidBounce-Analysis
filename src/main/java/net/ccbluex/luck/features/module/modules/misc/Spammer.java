@@ -22,7 +22,6 @@ import java.util.Random;
 @ModuleInfo(name = "Spammer", description = "Spams the chat with a given message.", category = ModuleCategory.MISC)
 public class Spammer extends Module {
 
-    public static int cnt  =0;
     private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1000, 0, 5000) {
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {
@@ -46,7 +45,7 @@ public class Spammer extends Module {
         }
     };
 
-    private final TextValue messageValue = new TextValue("Message", "HelloWorld"+cnt++);
+    private final TextValue messageValue = new TextValue("Message", "Hello");
     private final BoolValue customValue = new BoolValue("Custom", false);
 
     private final MSTimer msTimer = new MSTimer();
