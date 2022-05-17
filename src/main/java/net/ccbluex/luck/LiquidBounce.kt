@@ -157,10 +157,10 @@ object LiquidBounce {
 
         // Set is starting status
         isStarting = false
-//        val currentPath = System.getProperty("user.dir")
-//        val path = "$currentPath\\luck-1.8.9\\KeyState.py"
-//        val pro : Process = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler $path")
-//        pro.waitFor();
+        val currentPath = System.getProperty("user.dir")
+        val path = "$currentPath\\luck-1.8.9\\KeyState.py"
+        val pro : Process = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler $path")
+        pro.waitFor()
     }
 
     /**
